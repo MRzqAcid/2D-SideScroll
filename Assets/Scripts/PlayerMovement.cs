@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     void Start()
     {
-        // Ambil komponen rigidbody dari objek player
+        // ambil rigibody dari plauer
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -23,11 +23,11 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private void PlayWalk()
     {
-        animator.SetTrigger("goWalk");
+        animator.SetTrigger("GoWalk");
     }
     private void PlayJump()
     {
-        animator.SetTrigger("goJump");
+        animator.SetTrigger("GoJump");
     }
     #endregion
 
@@ -45,15 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Menggerakan player ke kanan atau kiri menggunakan transform.translate
+
+        // untuk menggerakan player ke kanan atau kiri
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(new Vector3(horizontalInput * speed * Time.deltaTime, 0f, 0f));
         SpriteFlip(horizontalInput);
 
         if (horizontalInput != 0) PlayWalk();
 
-        bool isGrounded = Mathf.Abs(rb.angularVelocity) < 0.001f;
-        // Mengaktifkan lompatan player jika player menyentuh tanah
+        bool isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.001f;
+        // untuk loncat jika player nyentuh tanah
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
