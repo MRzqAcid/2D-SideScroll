@@ -20,11 +20,13 @@ public class PlayerPositionHandler : MonoBehaviour
 
     }
 
+    #region
     public void OnCheckpoint(GameObject col)
     {
         Vector2 newCheckpointPosition = col.transform.position;
         currentCheckpointPosition = newCheckpointPosition;
-      
+        SavePos(currentCheckpointPosition);
+
     }
 
 
@@ -33,11 +35,29 @@ public class PlayerPositionHandler : MonoBehaviour
         ChangePlayerPosition(currentCheckpointPosition);
     }
 
-    public void ChangePlayerPosition(Vector2 newPosition)
+    public void OnFinish()
+    {
+        playerPositionData.ResetData();
+    }
+    #endregion
+
+
+
+
+    private void ChangePlayerPosition(Vector2 newPosition)
     {
 
         transform.position = newPosition;
 
     }
 
+    private void LoadPos()
+    {
+        playerCurretPosition = playerPositionData.position;
+    }
+
+    private void SavePos(Vector2 newPosition)
+    {
+        playerPositionData.position = newPosition;
+    }
 }
